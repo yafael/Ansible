@@ -1,5 +1,7 @@
 - name: This is a hello-world example
   hosts: localhost
   tasks:
-    - name: Create a file called '/tmp/testfile.txt' with the content 'hello world.'
-      copy: content="hello world\n" dest=/tmp/testfile.txt
+    - name: Create a file called 'helloworld.txt' with the content 'hello world.'
+      copy:
+        content: "hello world\n"
+        dest: $ANSIBLE_DEMO/helloworld.txt

@@ -1,0 +1,5 @@
+- name: This is a shell example
+  hosts: localhost
+  tasks:
+    - name: Do things
+      shell: ls -alh > $ANSIBLE_DEMO/shell.txt
