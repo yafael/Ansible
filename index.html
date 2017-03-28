@@ -41,6 +41,11 @@
 			<section id="banner">
 				<h2>This is Ansible</h2>
 				<p>A general purpose tool for managing servers</p>
+				<ul class="actions">
+					<li>
+						<a href="#" class="button big">Learn More</a>
+					</li>
+				</ul>
 			</section>
 
 		<!-- One -->
@@ -101,38 +106,72 @@
 				</div>
 			</section>
 
+            <section id="three" class="wrapper style1 align-center">
+                <div class="container">
+                    <h2>Installation</h2>
+                    <p><code>pip install ansible</code></p>
+                </div>
+            </section>
+
+            <section id="four" class="wrapper style2 align-center">
+                <div class="container">
+                    <h2>A Simple "Hello, World" Tutorial</h2>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/localhost-ping.jpg" />
+                        <p class="feature 12u$">
+                            Confirm Ansible is running on the host 
+                            machine using the command:</br>
+                            <code>ansible localhost -m ping</code>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/desktop-ip.png" />
+                        <p class="feature 12u$">
+                            Determine the IP address of your node machine(s)
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/hostfile.png" />
+                        <p class="feature 12u$">
+                            Add node machine(s) to a group in:</br>
+                            <code>/etc/ansible/hosts</code>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/ping-desktop.png" />
+                        <p class="feature 12u$">
+                            Test that nodes in group are reachable using:</br>
+                            <code>ansible nodes -k -m ping</code></br>
+                            Note: the <code>-k</code> flag is required for 
+                            ansible to retrieve the SSH password for each machine
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/helloworldyml.png" />
+                        <p class="feature 12u$">
+                            Build a playbook that contains the tasks and node 
+                            machine(s) to run the tasks on</br>
+                            Note: <code>hosts</code> can be individual IP addresses or groups
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/helloworldoutput.png" />
+                        <p class="feature 12u$">
+                            Run the <code>HelloWorld.yml</code> playbook using command:</br>
+                            <code>anisble-playbook -k HelloWorld.yml</code>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="image fit" src="images/demopics/playbook-result.png" />
+                        <p class="feature 12u$">
+                            Checking <code>/tmp/</code> folder should show test
+                            file created using the ansible playbook
+                        </p>
+                    </div>
+                </div>
+            </section>
 		<!-- Footer -->
-			<footer id="footer" class="wrapper style1 align-center">
-				<div class="container">
-					<header>
-						<h2>Start learning today</h2>
-						<p>...</p>
-					</header>
-					<div class="row 200%">
-						<section class="4u 12u$(small)">
-							<ul class="actions">
-								<li>
-									<a href="http://docs.ansible.com/" class="button big">Learn More</a>
-								</li>
-							</ul>
-						</section>
-						<section class="4u 12u$(small)">
-							<ul class="actions">
-								<li>
-									<a href="generic.html" class="button big">Demo</a>
-								</li>
-							</ul>
-						</section>
-						<section class="4u 12u$(small)">
-							<ul class="actions">
-								<li>
-									<a href="elements.html" class="button big">About us</a>
-								</li>
-							</ul>
-						</section>
-					</div>
-				</div>
-			</footer>
+			
 
 	</body>
 </html>
