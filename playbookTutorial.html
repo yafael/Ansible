@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+  Interphase by TEMPLATED
+  templated.co @templatedco
+  Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Playbooks</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/skel-layers.min.js"></script>
+    <script src="js/init.js"></script>
+    <noscript>
+      <link rel="stylesheet" href="css/skel.css" />
+      <link rel="stylesheet" href="css/style.css" />
+      <link rel="stylesheet" href="css/style-xlarge.css" />
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+    </noscript>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+  </head>
+  <body>
+
+    <!-- Header -->
+      <header id="header">
+        <h1><a href="index.html">Home</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="generic.html">Generic</a></li>
+            <li><a href="elements.html">Elements</a></li>
+          </ul>
+        </nav>
+      </header>
+
+    <!-- Main -->
+      <section id="main" class="wrapper">
+        <div class="container">
+
+          <header class="major">
+            <h2>Ansible Playbooks</h2>
+            <p>Playbooks are the the basis for declaring configurations as well as orchestrating steps of any manual ordered process</p>
+          </header>
+
+          <img src="images/pic08.jpg" alt="" />
+          <br/>
+          <h3>What does one look like?</h3>
+          <p>Playbooks are written and expressed in YAML format.  They are designed to be more of a model of a configuration or a process rather than a program language.  This allows for easy human readablility by anyone.  No special coding skills are needed to create a playbook.</p>
+
+          <h3>What is in one?</h3>
+          <p>Each playbook is composed of one or more 'plays' in a list.  In the playbook file, each play is in its own task hash.  Each of these plays is run (in the order defined in the playbook) to perform a certain task.  A task is nothing more than a call to an ansible module.  These modules do the actual 'heavy lifting' needed to complete a task.  Ansible comes with many modules out of the box covering a wide range of tasks.</p>
+
+          <br/>
+          <h2>Basic Layout of a Play</h2>
+          <h3>Host and Users</h3>
+          <p>For each play, you get to choose which machines will be targets and what remote user will complete the tasks.  The hosts hash defines which machines will be targeted while the remote_user hash is the name of the user account.</p>
+          <pre><code class='yaml'>hosts: webservers
+remote_user: root</code></pre>
+
+          <h3>Task List</h3>
+          <p>Each play is comprised of a list of tasks.  All tasks that will be executed during this play are defined as a list item in the 'tasks' hash. Each of these tasks are executed in order, one at a time, against all machines targeted, before moving on to the next task.</p>
+          <p>Each task should have a name that is human readable.  This name is displayed during the running of the task.  Below this is the task itself.  Modules that are needed to perform the task are added to this list element and any corresponding arguments are added for each module.</p>
+          <pre><code>tasks:
+  - name: make sure apache is running
+    service: name=httpd state=started</code></pre>
+
+          <h3>Handlers</h3>
+          <p>Handlers can respond to changes on the remote system by running operations defined by the user.  These actions are triggered at the end of each block of tasks in a play when notified of a change by a module.  These actions are listed in the notify section of a task and are called handlers</p>
+          <p>Handlers are lists of tasks and are referenced by a globally unique name.  For a handler to run, it must be notified by a notifier.  Handlers are defined as a list item in a handlers hash.  Each handler has a name it can be called by, the action it performs, and can have a generic topic it listens for.</p>
+          <pre><code class="yaml">handlers:
+    - name: restart memcached
+      service: name=memcached state=restarted
+      listen: "restart web services"
+    - name: restart apache
+      service: name=apache state=restarted
+      listen: "restart web services"
+
+tasks:
+    - name: restart everything
+      command: echo "this task will restart the web services"
+      notify: "restart web services"</code></pre>
+
+          <h3>Running a Playbook</h3>
+          <p>It's very easy to run a playbook.  In the command line, use ansible-playbook with the name of your playbook YAML file and any other flags.  This will start the execution of the playbook</p>
+          <pre><code class="yaml">ansible-playbook myPlaybook.yml</code></pre>
+
+          <h2>Example Playbook</h2>
+          <pre><code>---
+- hosts: webservers
+  remote_user: root
+
+  tasks:
+  - name: ensure apache is at the latest version
+    yum: name=httpd state=latest
+  - name: write the apache config file
+    template: src=/srv/httpd.j2 dest=/etc/httpd.conf
+    notify:
+    - restart apache
+    handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted
+
+- hosts: databases
+  remote_user: root
+
+  tasks:
+  - name: ensure postgresql is at the latest version
+    yum: name=postgresql state=latest
+  - name: ensure that postgresql is started
+    service: name=postgresql state=started
+</code></pre>
+
+          <br/>
+          <h2>More Features</h2>
+          <p>Above is just the very beginning of how to set up and run a playbook.  It is already a powerful tool, but there is still a lot more that can be used to customize a playbook to fit your specific needs as well as simplify each task.<br/>
+          More features include:</p>
+          <ul>
+            <li>Variables</li>
+            <li>Include statments to include plays and tasks from other files</li>
+            <li>Templating</li>
+            <li>Conditional statments and Loops</li>
+            <li>Blocks and Error Handling</li>
+            <li>Strategies to help organize when each task is run on each machine</li>
+          </ul>
+          <p>You can learn more about playbooks <a href="http://docs.ansible.com/ansible/playbooks.html">here</a></p>
+
+        </div>
+      </section>
+
+    <!-- Footer -->
+      <footer id="footer">
+      </footer>
+
+  </body>
+</html>
