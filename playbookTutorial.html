@@ -28,12 +28,13 @@
 
     <!-- Header -->
       <header id="header">
-        <h1><a href="index.html">Home</a></h1>
+        <h1><a href="index.html">Ansible</a></h1>
         <nav id="nav">
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="generic.html">Generic</a></li>
-            <li><a href="elements.html">Elements</a></li>
+            <li><a href="generic.html">Demo</a></li>
+            <li><a href="playbookTutorial.html">Tutorial</a></li>
+            <li><a href="elements.html">Team</a></li>
           </ul>
         </nav>
       </header>
@@ -53,7 +54,7 @@
           <p>Playbooks are written and expressed in YAML format.  They are designed to be more of a model of a configuration or a process rather than a program language.  This allows for easy human readablility by anyone.  No special coding skills are needed to create a playbook.</p>
 
           <h3>What is in one?</h3>
-          <p>Each playbook is composed of one or more 'plays' in a list.  In the playbook file, each play is in its own task hash.  Each of these plays is run (in the order defined in the playbook) to perform a certain task.  A task is nothing more than a call to an ansible module.  These modules do the actual 'heavy lifting' needed to complete a task.  Ansible comes with many modules out of the box covering a wide range of tasks.</p>
+          <p>Each playbook is composed of one or more 'plays' in a list.  In the playbook file, each play is in its own task hash.  Each of these plays is run (in the order defined in the playbook) to perform a certain task.  A task is nothing more than a call to an ansible module.  These modules do the actual 'heavy lifting' needed to complete a task.  Ansible comes with many modules out of the box covering a wide range of tasks. Check them out <a href="http://docs.ansible.com/ansible/modules_by_category.html">here.</a></p>
 
           <br/>
           <h2>Basic Layout of a Play</h2>
@@ -65,7 +66,7 @@ remote_user: root</code></pre>
           <h3>Task List</h3>
           <p>Each play is comprised of a list of tasks.  All tasks that will be executed during this play are defined as a list item in the 'tasks' hash. Each of these tasks are executed in order, one at a time, against all machines targeted, before moving on to the next task.</p>
           <p>Each task should have a name that is human readable.  This name is displayed during the running of the task.  Below this is the task itself.  Modules that are needed to perform the task are added to this list element and any corresponding arguments are added for each module.</p>
-          <pre><code>tasks:
+          <pre><code class="yaml">tasks:
   - name: make sure apache is running
     service: name=httpd state=started</code></pre>
 
@@ -131,22 +132,23 @@ tasks:
           </ul>
           <p>You can learn more about playbooks <a href="http://docs.ansible.com/ansible/playbooks.html">here</a></p>
 
-
+          <br/>
+          <br/>
 
           <h2>Ansible Galaxy</h2>
           <p>
           <h3>What is Ansible Galaxy?</h3>
             <a href="https://galaxy.ansible.com/">Ansible Galaxy</a> is a way to expand you playbooks through the use of community created "roles" which act as premade code segments for your playbooks.
             <br/>
-            
+
           <h3>Example:</h3>
-            Lets pull an example "role" from Ansible Galaxy <a href="https://galaxy.ansible.com/geerlingguy/mysql/">such as this one</a> This role (called geerlingguy.mysql) will install 
+            Lets pull an example "role" from Ansible Galaxy <a href="https://galaxy.ansible.com/geerlingguy/mysql/">such as this one</a> This role (called geerlingguy.mysql) will install
             mysql or mariadb on a given system or server.
             <br/>
             To install this "role" we use the following command:
-            
+
             <pre><code class="yaml">ansible-galaxy install geerlingguy.mysql</code></pre>
-            
+
             now that the role is installed we can call it through a playbook such as this:
 
             <pre><code class="yaml">- hosts: db-servers
