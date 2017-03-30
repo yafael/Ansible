@@ -1,0 +1,14 @@
+---
+- name: Build a docker image & start the container from the
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Build image
+      docker_image:
+        path: .
+        name: devenv
+    - name: Create a container
+      docker_container:
+        name: devenv
+        image: devenv
